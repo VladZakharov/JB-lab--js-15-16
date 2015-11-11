@@ -40,6 +40,12 @@ function minSelector(selector){
  *
  * @return {String} отформатированная строка.
  */
-function stringTempl(templ){
-
+function stringTempl(templ) {
+    var regex = /\{\{\d}}/gim;
+    var arr = templ.match(regex);
+    if (arr.length != (arguments.length - 1)) throw new Error("Invalid arguments");
+    for (var i = 0; i < arr.length; i++) {
+        templ = templ.replace(arr[i], arguments[i + 1]);
+    }
+    return templ;
 }

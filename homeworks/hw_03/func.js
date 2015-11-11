@@ -10,8 +10,20 @@
  *
  * Подробнее по методу можно посмотретьпо спецификации ES5
  */
-Object.create = function(proto){
-
+Object.create = function (proto) {
+    if (arguments.length == 0 || (typeof arguments[0] != 'object' && typeof arguments[0] != 'function') || !(arguments[1] && typeof arguments[1] != 'object')) {
+        throw new Error("Illegal arguments");
+    }
+    var func = function () {};
+    func.prototype = proto;
+    var result = new func();
+    if (arguments.length > 1) {
+        var propertiesObject = arguments[1];
+        for (var elem in propertiesObject) {
+            result[elem] = propertiesObject[elem];
+        }
+    }
+    return result;
 };
 
 
